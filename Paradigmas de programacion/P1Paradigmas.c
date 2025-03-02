@@ -9,6 +9,7 @@ typedef struct {
     int NumDia;
     string NomMes;
     int NumMes;
+
     int Year;
 }fecha;
 
