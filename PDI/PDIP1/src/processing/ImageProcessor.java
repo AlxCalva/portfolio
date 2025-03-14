@@ -20,6 +20,8 @@ public class ImageProcessor {
         return result;
     }
 
+
+
     public static BufferedImage extractChannel(BufferedImage img, char channel) {
         int width = img.getWidth();
         int height = img.getHeight();
@@ -74,4 +76,23 @@ public class ImageProcessor {
         }
         return result;
     }
+
+    public static int[] computeHistogramY(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int[] histogram = new int[256];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Color color = new Color(image.getRGB(x, y));
+
+                // Conversión a YIQ: Y = 0.299R + 0.587G + 0.114B
+                int yValue = (int) (0.299 * color.getRed() + 0.587 * color.getGreen() + 0.114 * color.getBlue());
+
+                histogram[yValue]++;
+            }
+        }
+        return histogram;
+    }
+
 }

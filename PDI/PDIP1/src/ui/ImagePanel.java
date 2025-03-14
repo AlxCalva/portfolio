@@ -10,6 +10,19 @@ import javax.imageio.ImageIO;
 
 public class ImagePanel extends JPanel {
     private BufferedImage image;
+    private HistogramPanel histogramPanel;
+
+    public ImagePanel() {
+        setLayout(new BorderLayout());
+        histogramPanel = new HistogramPanel();
+        add(histogramPanel, BorderLayout.EAST);
+    }
+
+    public void setImage(BufferedImage img) {
+        this.image = img;
+        histogramPanel.setImage(img);
+        repaint();
+    }
 
     public void loadImage() {
         JFileChooser fileChooser = new JFileChooser();
@@ -17,7 +30,7 @@ public class ImagePanel extends JPanel {
             File file = fileChooser.getSelectedFile();
             try {
                 image = ImageIO.read(file);
-                repaint();
+                setImage(image);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "No se pudo cargar la imagen.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -27,28 +40,28 @@ public class ImagePanel extends JPanel {
     public void convertToGrayscale() {
         if (image != null) {
             image = ImageProcessor.toGrayscale(image);
-            repaint();
+            setImage(image);
         }
     }
 
     public void extractChannel(char channel) {
         if (image != null) {
             image = ImageProcessor.extractChannel(image, channel);
-            repaint();
+            setImage(image);
         }
     }
 
     public void adjustBrightness(int value) {
         if (image != null) {
             image = ImageProcessor.adjustBrightness(image, value);
-            repaint();
+            setImage(image);
         }
     }
 
     public void adjustContrast(float factor) {
         if (image != null) {
             image = ImageProcessor.adjustContrast(image, factor);
-            repaint();
+            setImage(image);
         }
     }
 
